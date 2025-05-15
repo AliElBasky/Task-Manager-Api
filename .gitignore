@@ -1,0 +1,33 @@
+## Build artifacts
+bin/
+obj/
+out/
+publish/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Visual Studio settings
+.vscode/
+.vs/
+
+## OS generated files
+.DS_Store
+Thumbs.db
+
+## Environment files
+.env
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+## Logs
+*.log
+
+## Others
+*.db
+
+appsettings.Development.json
