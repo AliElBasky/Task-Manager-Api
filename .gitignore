@@ -29,5 +29,7 @@ secrets.json
 
 ## Others
 *.db
+*.db-shm
+*.db-wal
 
 appsettings.Development.json
