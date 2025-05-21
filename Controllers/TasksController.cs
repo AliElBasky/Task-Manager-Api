@@ -4,6 +4,8 @@ using Task_Manager_API.Services;
 
 namespace Task_Manager_API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class TasksController : ControllerBase
     {
         private readonly ITaskService _service;
