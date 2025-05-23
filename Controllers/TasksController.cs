@@ -25,7 +25,7 @@ namespace Task_Manager_API.Controllers
 
         [HttpGet]
         [Route("GetTask")]
-        public async Task<ActionResult<TaskItem>> GetTask([FromBody] int id)
+        public async Task<ActionResult<TaskItem>> GetTask([FromQuery] int id)
         {
             var task = await _service.GetTaskByIdAsync(id);
             if (task == null)
