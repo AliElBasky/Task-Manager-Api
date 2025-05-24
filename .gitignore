@@ -33,3 +33,5 @@ secrets.json
 *.db-wal
 
 appsettings.Development.json
+appsettings.json
+
