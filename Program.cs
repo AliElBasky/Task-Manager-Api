@@ -18,8 +18,21 @@ builder.Services.AddControllers();
 
 
 //Add Database service bulider
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//    options.UseSqlite("Data Source=tasks.db"));
+
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+//                       ?? Environment.GetEnvironmentVariable("DATABASE_URL");
+
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//    options.UseNpgsql(connectionString));
+
+
+// postgre locally
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=tasks.db"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    //options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnection")));
+
 
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ITaskService, TaskService>();
