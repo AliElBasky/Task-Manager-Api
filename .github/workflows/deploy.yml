@@ -40,4 +40,4 @@ jobs:
       - name: Redeploy on Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --service=taskmanager-api --ci
+        run: railway up --service=taskmanager-api
