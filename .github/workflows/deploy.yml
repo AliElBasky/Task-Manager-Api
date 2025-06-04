@@ -1,39 +1,43 @@
-name: CI/CD - Docker + Railway
+name: Build and Deploy to Railway
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/taskmanager-api:latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/taskmanager-api:latest
 
-    - name: Install Railway CLI
-      run: npm install -g railway
+      - name: Install Node.js (required for new Railway CLI)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-      # 🚀 Deploy to Railway
-    - name: 🚀 Redeploy on Railway
-      run: railway up --service=taskmanager-api --ci
-      env:
+      - name: Install Railway CLI (new version)
+        run: npm install -g @railway/cli
+
+      - name: Redeploy on Railway
+        env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --service=taskmanager-api --ci
