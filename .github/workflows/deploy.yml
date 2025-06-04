@@ -29,6 +29,11 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/taskmanager-api:latest
 
-    - name: Deploy to Railway
-      run: |
-        curl -s -X POST https://backboard.railway.app/webhook/deploy/${{ secrets.RAILWAY_TOKEN }}
+    - name: Install Railway CLI
+      run: npm install -g railway
+
+      # 🚀 Deploy to Railway
+    - name: 🚀 Redeploy on Railway
+      run: railway up --service=taskmanager-api --ci
+      env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
